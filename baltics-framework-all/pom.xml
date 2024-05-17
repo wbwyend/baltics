@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>baltics-framwork-all</artifactId>
+    <artifactId>baltics-framework-all</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>baltics-designpattern-spring-boot-starter</module>

@@ -6,5 +6,8 @@ package cn.baltics.springboot.starter.designpattern.builder;
  *@date 2024/05/17 
  */
 public interface Builder<T> {
+    /**
+     * 建造方法
+     */
     T build();
 }

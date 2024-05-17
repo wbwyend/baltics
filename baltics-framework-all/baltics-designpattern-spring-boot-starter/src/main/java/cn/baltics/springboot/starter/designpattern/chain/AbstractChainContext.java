@@ -31,6 +31,12 @@ public class AbstractChainContext implements CommandLineRunner {
         abstractChainHandlers.forEach(each -> each.handler(requestParam));
     }
 
+    /**
+     * 实例化{@link AbstractChainContext}
+     *
+     * @param args incoming main method arguments
+     * @throws Exception
+     */
     @Override
     public void run(String... args) throws Exception {
         Map<String, AbstractChainHandler> abstractChainHandlerMap = ApplicationContextHolder.getBeansOfType(AbstractChainHandler.class);

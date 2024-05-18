@@ -11,6 +11,7 @@
     <modules>
         <module>baltics-framework-all</module>
         <module>baltics-front</module>
+        <module>baltics-aggregation</module>
     </modules>
 
     <properties>
@@ -27,6 +28,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>2.7.18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <version>2.7.18</version>
         </dependency>
     </dependencies>

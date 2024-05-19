@@ -9,7 +9,7 @@ public interface Lock {
 
     String getMask();
 
-    boolean lock();
+    boolean lock() throws Exception;
 
     void unlock();
 }

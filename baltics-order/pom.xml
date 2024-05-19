@@ -9,16 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>baltics-framework-all</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>baltics-designpattern-spring-boot-starter</module>
-        <module>baltics-base-spring-boot-starter</module>
-        <module>baltics-cache-spring-boot-starter</module>
-        <module>baltics-mail-spring-boot-starter</module>
-        <module>baltics-convention-spring-boot-starter</module>
-        <module>baltics-web-spring-boot-starter</module>
-    </modules>
+    <artifactId>baltics-order</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

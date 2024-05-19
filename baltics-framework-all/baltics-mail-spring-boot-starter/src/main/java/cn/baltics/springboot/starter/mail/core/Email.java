@@ -1,9 +1,10 @@
-package cn.baltics.springboot.starter.mail;
+package cn.baltics.springboot.starter.mail.core;
 
 import cn.baltics.springboot.starter.designpattern.builder.Builder;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail.SimpleEmail;
 
 import java.util.Date;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  *@author wbwyend
  *@date 2024/05/18 
  */
-public class Email extends HtmlEmail implements Builder<Email> {
+public class Email extends SimpleEmail implements Builder<Email> {
 
     public Email hostName(String hostName) {
         this.hostName = hostName;

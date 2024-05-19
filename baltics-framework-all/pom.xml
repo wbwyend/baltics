@@ -16,6 +16,7 @@
         <module>baltics-base-spring-boot-starter</module>
         <module>baltics-cache-spring-boot-starter</module>
         <module>baltics-mail-spring-boot-starter</module>
+        <module>baltics-convention-spring-boot-starter</module>
     </modules>
 
     <properties>

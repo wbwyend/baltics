@@ -1,10 +1,14 @@
 package cn.baltics.springboot.starter.cache;
 
+import cn.baltics.springboot.starter.cache.convention.LockErrorCode;
+import cn.baltics.springboot.starter.cache.convention.LockException;
 import cn.baltics.springboot.starter.cache.core.Cache;
 import cn.baltics.springboot.starter.cache.core.CacheIfAbsentExecutor;
 import cn.baltics.springboot.starter.cache.core.CacheLoader;
 import cn.baltics.springboot.starter.cache.lock.DistributedLock;
 import cn.baltics.springboot.starter.cache.lock.DistributedLockFactory;
+import cn.baltics.springboot.starter.convention.errorcode.BaseErrorCode;
+import cn.baltics.springboot.starter.convention.exception.ServiceException;
 import com.alibaba.fastjson2.JSON;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +70,17 @@ public class CacheService implements Cache  {
         T result = get(key, clazz);
         if (!isNullOrBlank(result)) return result;
         DistributedLock lock = DistributedLockFactory.getLock(SAFE_GET_DISTRIBUTED_LOCK_KEY_PREFIX + key);
-        lock.lock();
+        try {
+            boolean isLocked = lock.lock();
+            while (!isLocked) {
+                if(!isNullOrBlank(result = get(key, clazz))) return result;
+                isLocked = lock.lock();
+            }
+        } catch (LockException e) {
+            throw new ServiceException(LockErrorCode.TOO_MANY_WAITING_THREAD_ERROR.message());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         try {
             if (isNullOrBlank(result = get(key, clazz))) {
                 if (isNullOrBlank(result = loadAndSet(key, timeout, unit, loader))) {

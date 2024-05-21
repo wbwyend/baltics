@@ -6,6 +6,7 @@ import cn.baltics.customer.dao.mapper.CustomerRepositoryMapper;
 import cn.baltics.customer.repository.CustomerRepository;
 import cn.hutool.core.bean.BeanUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

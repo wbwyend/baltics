@@ -1,16 +1,20 @@
 package cn.baltics.customer.dto.req;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- *@name CustomerRegisterRequset
+ *@func 用户注册请求DTO
  *
  *@author wbwyend
  *@date 2024/05/19 
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CustomerRegisterCommitReqDTO {
     /**
      * 邮箱
@@ -24,8 +28,4 @@ public class CustomerRegisterCommitReqDTO {
      * 用户名
      */
     private String username;
-    /**
-     * 验证码
-     */
-    private String verificationCode;
 }

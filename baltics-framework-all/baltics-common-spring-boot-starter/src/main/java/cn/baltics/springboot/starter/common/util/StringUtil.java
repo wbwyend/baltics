@@ -13,4 +13,8 @@ public final class StringUtil {
     public static boolean isNullOrBlank(String s) {
         return s == null || "".equals(s);
     }
+
+    public static boolean isNotNullAndBlank(String s) {
+        return s != null && !"".equals(s);
+    }
 }

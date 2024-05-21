@@ -55,15 +55,15 @@ public class Results<T> implements Serializable {
     /**
      * 响应数据
      */
-    private T result;
+    private T data;
 
-    public Results<T> setResult(T result) {
-        this.result = result;
+    public Results<T> setData(T data) {
+        this.data = data;
         return this;
     }
 
-    public T getResult() {
-        return result;
+    public T getData() {
+        return data;
     }
 
     /**
@@ -88,7 +88,7 @@ public class Results<T> implements Serializable {
     }
 
     public static <T> Results<T> success(T data) {
-        return new Results<T>().setCode(SUCCESS_CODE).setMessage(SUCCESS_MESSAGE).setResult(data);
+        return new Results<T>().setCode(SUCCESS_CODE).setMessage(SUCCESS_MESSAGE).setData(data);
     }
 
     public static <T> Results<T> fail(){

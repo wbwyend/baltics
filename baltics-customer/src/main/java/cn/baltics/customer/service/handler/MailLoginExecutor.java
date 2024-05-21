@@ -44,7 +44,7 @@ public class MailLoginExecutor implements AbstractStrategyExecutor<CustomerLogin
         }
         if (StringUtil.isNullOrBlank(requestParam.getVerificationCode())) {
             sendVerificationCode(customer);
-            return null;
+            return CustomerLoginRespDTO.builder().build();
         } else {
             checkVerificationCode(requestParam);
             return CustomerLoginRespDTO.builder()

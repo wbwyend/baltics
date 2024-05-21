@@ -28,7 +28,7 @@ public class PasswordLoginExecutor implements AbstractStrategyExecutor<CustomerL
     @Override
     public CustomerLoginRespDTO executeResp(CustomerLoginReqDTO requestParam) {
         Customer result = customerRepository.getCustomerByUsername(requestParam.getUsername());
-        if (result == null || StringUtil.isNullOrBlank(result.getPassword()) || requestParam.getPassword().equals(result.getPassword())) {
+        if (result == null || StringUtil.isNullOrBlank(result.getPassword()) || !requestParam.getPassword().equals(result.getPassword())) {
             throw  new ClientException(CustomerErrorEnum.USERNAME_OR_PASSWORD_ERROR);
         }
         return CustomerLoginRespDTO.builder()

@@ -26,6 +26,7 @@ public final class TokenUtil {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setHeaderParam("alg", "HS256")
+                .setAudience(val)
                 .setExpiration(new Date(System.currentTimeMillis() + OVER_TIME))
                 .signWith(SignatureAlgorithm.HS256, sign)
                 .claim("id", val)
@@ -43,4 +44,15 @@ public final class TokenUtil {
         }
         return result;
     }
+
+    public static String getAudience(String token) {
+        String result = null;
+        try {
+            result = (String) Jwts.parser().parseClaimsJws(token).getHeader().get("alg");
+        } catch (Exception e) {
+            throw new ClientException(TOKEN_ERROR);
+        }
+        return result;
+    }
+
 }

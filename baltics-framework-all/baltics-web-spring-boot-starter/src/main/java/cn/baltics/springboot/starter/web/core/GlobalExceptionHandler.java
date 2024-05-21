@@ -1,4 +1,4 @@
-package cn.baltics.springboot.starter.web.config.core;
+package cn.baltics.springboot.starter.web.core;
 
 import cn.baltics.springboot.starter.convention.exception.AbstractException;
 import cn.baltics.springboot.starter.convention.exception.ClientException;

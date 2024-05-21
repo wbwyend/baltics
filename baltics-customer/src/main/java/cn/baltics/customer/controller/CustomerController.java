@@ -1,7 +1,9 @@
 package cn.baltics.customer.controller;
 
+import cn.baltics.customer.dto.req.CustomerLoginReqDTO;
 import cn.baltics.customer.dto.req.CustomerRegisterCommitReqDTO;
 import cn.baltics.customer.dto.req.CustomerRegisterVerifyReqDTO;
+import cn.baltics.customer.dto.resp.CustomerLoginRespDTO;
 import cn.baltics.customer.service.CustomerService;
 import cn.baltics.springboot.starter.convention.result.Results;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +29,15 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/register/verify")
-    public Results<Void> registerVerify(@RequestBody CustomerRegisterVerifyReqDTO requestParam) {
-        customerService.registerVerify(requestParam);
-        return Results.success();
+    public Results<CustomerLoginRespDTO> registerVerify(@RequestBody CustomerRegisterVerifyReqDTO requestParam) {
+        CustomerLoginRespDTO result = customerService.registerVerify(requestParam);
+        return Results.success(result);
+    }
+
+    @PostMapping("/customer/login")
+    public Results<CustomerLoginRespDTO> login(@RequestBody CustomerLoginReqDTO requestParam) {
+        CustomerLoginRespDTO result = customerService.login(requestParam);
+        return Results.success(result);
     }
 
 }

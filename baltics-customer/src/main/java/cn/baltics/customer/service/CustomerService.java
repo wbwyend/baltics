@@ -1,7 +1,9 @@
 package cn.baltics.customer.service;
 
+import cn.baltics.customer.dto.req.CustomerLoginReqDTO;
 import cn.baltics.customer.dto.req.CustomerRegisterCommitReqDTO;
 import cn.baltics.customer.dto.req.CustomerRegisterVerifyReqDTO;
+import cn.baltics.customer.dto.resp.CustomerLoginRespDTO;
 
 /**
  *@name CustomerService
@@ -16,5 +18,16 @@ public interface CustomerService {
      */
     void registerCommit(CustomerRegisterCommitReqDTO requestParam);
 
-    void registerVerify(CustomerRegisterVerifyReqDTO requestParam);
+    /**
+     * 验证注册请求
+     *
+     * @param requestParam 请求参数
+     */
+    CustomerLoginRespDTO registerVerify(CustomerRegisterVerifyReqDTO requestParam);
+
+    /**
+     * 登录
+     * @param requestParam 请求参数
+     */
+    CustomerLoginRespDTO login(CustomerLoginReqDTO requestParam);
 }

@@ -7,7 +7,6 @@ import cn.baltics.customer.enums.CustomerEnum;
 import cn.baltics.customer.enums.CustomerErrorEnum;
 import cn.baltics.customer.enums.CustomerLoginMethodEnum;
 import cn.baltics.customer.repository.CustomerRepository;
-import cn.baltics.customer.repository.impl.CustomerRepositoryImpl;
 import cn.baltics.springboot.starter.cache.CacheService;
 import cn.baltics.springboot.starter.common.util.StringUtil;
 import cn.baltics.springboot.starter.common.util.TokenUtil;
@@ -24,7 +23,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
- *@func 邮箱登录执行器
+ *@func 邮箱登录策略执行器
  *
  *@author wbwyend
  *@date 2024/05/20 
@@ -45,12 +44,13 @@ public class MailLoginExecutor implements AbstractStrategyExecutor<CustomerLogin
         }
         if (StringUtil.isNullOrBlank(requestParam.getVerificationCode())) {
             sendVerificationCode(customer);
+            return null;
         } else {
             checkVerificationCode(requestParam);
+            return CustomerLoginRespDTO.builder()
+                    .token(TokenUtil.createToken(customer.getId().toString(), customer.getPassword()))
+                    .build();
         }
-        return CustomerLoginRespDTO.builder()
-                .token(TokenUtil.createToken(customer.getId().toString(), customer.getPassword()))
-                .build();
     }
 
     private void checkVerificationCode(CustomerLoginReqDTO requestParam) {

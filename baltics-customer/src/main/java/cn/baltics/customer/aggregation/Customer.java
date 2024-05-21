@@ -51,5 +51,5 @@ public class Customer implements Serializable {
      */
     private String avatar;
 
-    private String code;
+    private String verificationCode;
 }

@@ -11,7 +11,9 @@ public interface AbstractStrategyExecutor<Request, Response> {
      *
      * @param requestParam 请求参数
      */
-    void execute(Request requestParam);
+    default void execute(Request requestParam) {
+
+    }
 
     /**
      * 有返回值执行
@@ -19,7 +21,9 @@ public interface AbstractStrategyExecutor<Request, Response> {
      * @param requestParam 请求参数
      * @return 执行结果
      */
-    Response executeResp(Request requestParam);
+    default Response executeResp(Request requestParam) {
+        return null;
+    }
 
     /**
      * 策略标识

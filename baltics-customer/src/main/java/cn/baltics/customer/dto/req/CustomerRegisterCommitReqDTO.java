@@ -27,5 +27,5 @@ public class CustomerRegisterCommitReqDTO {
     /**
      * 验证码
      */
-    private String code;
+    private String verificationCode;
 }

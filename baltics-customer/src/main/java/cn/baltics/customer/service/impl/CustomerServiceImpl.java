@@ -1,25 +1,27 @@
 package cn.baltics.customer.service.impl;
 
 import cn.baltics.customer.aggregation.Customer;
-import cn.baltics.customer.dao.entity.CustomerDO;
+import cn.baltics.customer.dto.req.CustomerLoginReqDTO;
 import cn.baltics.customer.dto.req.CustomerRegisterCommitReqDTO;
 import cn.baltics.customer.dto.req.CustomerRegisterVerifyReqDTO;
+import cn.baltics.customer.dto.resp.CustomerLoginRespDTO;
 import cn.baltics.customer.enums.CustomerEnum;
 import cn.baltics.customer.enums.CustomerErrorEnum;
 import cn.baltics.customer.repository.CustomerRepository;
 import cn.baltics.customer.service.CustomerService;
 import cn.baltics.springboot.starter.cache.CacheService;
+import cn.baltics.springboot.starter.common.util.TokenUtil;
+import cn.baltics.springboot.starter.common.util.VerificationCodeUtil;
 import cn.baltics.springboot.starter.convention.exception.ClientException;
-import cn.baltics.springboot.starter.convention.exception.ServiceException;
+import cn.baltics.springboot.starter.designpattern.strategy.AbstractStrategySelector;
+import cn.baltics.springboot.starter.distributedid.SnowflakeIdUtil;
 import cn.baltics.springboot.starter.mail.core.Email;
 import cn.baltics.springboot.starter.mail.core.EmailProperty;
-import com.alibaba.fastjson2.util.BeanUtils;
 import lombok.AllArgsConstructor;
 import org.apache.commons.mail.EmailException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -34,17 +36,20 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
     private EmailProperty emailProperty;
     private CacheService cacheService;
+    private AbstractStrategySelector abstractStrategySelector;
     private static final long VERIFICATION_CODE_TIMEOUT = 10L;
-
     @Override
     public void registerCommit(CustomerRegisterCommitReqDTO requestParam) {
-        String username = requestParam.getUsername();
-        String mail = requestParam.getMail();
-        if (!customerRepository.registerCheckDuplication(username, mail)) {
+        String verificationCode = VerificationCodeUtil.getNewCode();
+        Customer customer = Customer.builder()
+                .username(requestParam.getUsername())
+                .password(requestParam.getPassword())
+                .mail(requestParam.getMail())
+                .verificationCode(verificationCode)
+                .build();
+        if (!customerRepository.registerCheckDuplication(customer)) {
             throw new ClientException(CustomerErrorEnum.CUSTOMER_REGISTER_DUPLICATION);
         }
-        String verificationCode = generateVerificationCode();
-        requestParam.setCode(verificationCode);
         try {
             Email email = Email.builder()
                     .hostName(emailProperty.getHostName())
@@ -54,38 +59,34 @@ public class CustomerServiceImpl implements CustomerService {
                     .from(emailProperty.getUsername())
                     .to(requestParam.getMail())
                     .subject("[baltics]邮箱验证码")
-                    .msg("您本次注册的邮箱验证码为" + verificationCode + "，验证码有效期为10分钟。")
+                    .msg("您本次注册的邮箱验证码为" + verificationCode + "，验证码有效期为" + VERIFICATION_CODE_TIMEOUT + "分钟。")
                     .build();
             email.send();
         } catch (EmailException e) {
             throw new ClientException(CustomerErrorEnum.SEND_VERIFICATION_CODE_EMAIL_FAIL);
         }
-        Customer customer;
         cacheService.put(CustomerEnum.CUSTOMER_REGISTER_VERIFICATION_CODE.name() + requestParam.getMail(),
-                requestParam,
+                customer,
                 VERIFICATION_CODE_TIMEOUT,
                 TimeUnit.MINUTES);
     }
 
     @Override
-    public void registerVerify(CustomerRegisterVerifyReqDTO requestParam) {
-        CustomerRegisterCommitReqDTO cache = cacheService.get(CustomerEnum.CUSTOMER_REGISTER_VERIFICATION_CODE.name() + requestParam.getMail(), CustomerRegisterCommitReqDTO.class);
-        if (cache == null || !cache.getCode().equals(requestParam.getCode())) {
+    public CustomerLoginRespDTO registerVerify(CustomerRegisterVerifyReqDTO requestParam) {
+        Customer customer = cacheService.get(CustomerEnum.CUSTOMER_REGISTER_VERIFICATION_CODE.name() + requestParam.getMail(), Customer.class);
+        if (customer == null || !customer.getVerificationCode().equals(requestParam.getVerificationCode())) {
             throw new ClientException(CustomerErrorEnum.VERIFICATION_CODE_ERROR);
         }
-
-
+        customer.setId(SnowflakeIdUtil.nextId());
+        customerRepository.saveRegisterCustomer(customer);
+        return CustomerLoginRespDTO.builder()
+                .token(TokenUtil.createToken(customer.getId().toString(), customer.getPassword()))
+                .build();
     }
 
-    /**
-     * 生成验证码
-     */
-    private String generateVerificationCode() {
-        StringBuilder code = new StringBuilder();
-        Random random = new Random(System.currentTimeMillis());
-        for (int i = 0; i < 6; i++) {
-            code.append(random.nextInt(10));
-        }
-        return code.toString();
+    @Override
+    public CustomerLoginRespDTO login(CustomerLoginReqDTO requestParam) {
+        return abstractStrategySelector.chooseAndExecuteResp(requestParam.buildMask(), requestParam);
     }
+
 }

@@ -12,12 +12,15 @@
     <artifactId>baltics-framework-all</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>baltics-framework-core</module>
         <module>baltics-designpattern-spring-boot-starter</module>
         <module>baltics-base-spring-boot-starter</module>
         <module>baltics-cache-spring-boot-starter</module>
         <module>baltics-mail-spring-boot-starter</module>
         <module>baltics-convention-spring-boot-starter</module>
         <module>baltics-web-spring-boot-starter</module>
+        <module>baltics-common-spring-boot-starter</module>
+        <module>baltics-distributedid-spring-boot-starter</module>
     </modules>
 
     <properties>

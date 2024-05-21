@@ -6,7 +6,6 @@ import cn.baltics.customer.dao.mapper.CustomerRepositoryMapper;
 import cn.baltics.customer.repository.CustomerRepository;
 import cn.hutool.core.bean.BeanUtil;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,5 +37,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public void saveRegisterCustomer(Customer customer) {
         customerRepositoryMapper.insert(BeanUtil.copyProperties(customer, CustomerDO.class));
+    }
+
+    @Override
+    public Customer getCustomerById(long id) {
+        CustomerDO customerDO = customerRepositoryMapper.getCustomerById(id);
+        return BeanUtil.copyProperties(customerDO, Customer.class);
     }
 }

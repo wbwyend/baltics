@@ -3,7 +3,6 @@ package cn.baltics.springboot.starter.mail.core;
 import cn.baltics.springboot.starter.designpattern.builder.Builder;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 
 import java.util.Date;

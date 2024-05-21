@@ -1,7 +1,7 @@
 package cn.baltics.springboot.starter.designpattern.chain;
 
-import org.springframework.boot.CommandLineRunner;
 import cn.baltics.springboot.starter.base.ApplicationContextHolder;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.Ordered;
 import org.springframework.util.CollectionUtils;
 

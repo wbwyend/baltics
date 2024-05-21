@@ -7,7 +7,6 @@ import cn.baltics.springboot.starter.cache.core.CacheIfAbsentExecutor;
 import cn.baltics.springboot.starter.cache.core.CacheLoader;
 import cn.baltics.springboot.starter.cache.lock.DistributedLock;
 import cn.baltics.springboot.starter.cache.lock.DistributedLockFactory;
-import cn.baltics.springboot.starter.convention.errorcode.BaseErrorCode;
 import cn.baltics.springboot.starter.convention.exception.ServiceException;
 import com.alibaba.fastjson2.JSON;
 import org.apache.logging.log4j.util.Strings;

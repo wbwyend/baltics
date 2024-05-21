@@ -8,7 +8,6 @@ import cn.baltics.customer.service.CustomerService;
 import cn.baltics.springboot.starter.common.util.StringUtil;
 import cn.baltics.springboot.starter.convention.result.Results;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

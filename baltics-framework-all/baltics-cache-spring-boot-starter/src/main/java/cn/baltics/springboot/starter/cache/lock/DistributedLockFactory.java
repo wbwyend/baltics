@@ -1,6 +1,5 @@
 package cn.baltics.springboot.starter.cache.lock;
 
-import cn.baltics.springboot.starter.cache.lock.DistributedLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;

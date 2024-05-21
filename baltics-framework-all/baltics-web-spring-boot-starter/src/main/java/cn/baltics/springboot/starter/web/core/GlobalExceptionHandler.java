@@ -1,14 +1,15 @@
 package cn.baltics.springboot.starter.web.core;
 
+import cn.baltics.springboot.starter.common.util.StringUtil;
 import cn.baltics.springboot.starter.convention.exception.AbstractException;
 import cn.baltics.springboot.starter.convention.exception.ClientException;
 import cn.baltics.springboot.starter.convention.exception.ServiceException;
 import cn.baltics.springboot.starter.convention.result.Results;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *@name GlobalExceptionHandler
@@ -20,8 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = ClientException.class)
-    public Results clientException(HttpServletRequest request, ClientException ex) {
-        return Results.fail(ex.errorMessage);
+    public Results clientException(HttpServletResponse response, ClientException ex) {
+        if (StringUtil.isNotNullAndBlank(ex.errorCode)) response.setStatus(Integer.parseInt(ex.errorCode));
+        return Results.fail(Integer.parseInt(ex.errorCode), ex.errorMessage);
     }
 
     /**

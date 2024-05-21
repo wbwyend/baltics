@@ -1,10 +1,7 @@
 package cn.baltics.springboot.starter.designpattern.config;
 
-import cn.baltics.springboot.starter.base.config.ApplicationBaseConfiguration;
 import cn.baltics.springboot.starter.designpattern.chain.AbstractChainContext;
 import cn.baltics.springboot.starter.designpattern.strategy.AbstractStrategySelector;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

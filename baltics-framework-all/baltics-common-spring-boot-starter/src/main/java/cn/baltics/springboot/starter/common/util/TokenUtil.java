@@ -1,15 +1,13 @@
 package cn.baltics.springboot.starter.common.util;
 
-import cn.baltics.springboot.starter.convention.errorcode.BaseErrorCode;
+import cn.baltics.springboot.starter.common.enums.TokenErrorCode;
 import cn.baltics.springboot.starter.convention.exception.ClientException;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.impl.DefaultJwt;
-import io.jsonwebtoken.impl.DefaultJwtBuilder;
-import io.jsonwebtoken.impl.DefaultJwtParser;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *@func token工具包
@@ -20,37 +18,32 @@ import java.util.Map;
 public final class TokenUtil {
 
     private static final long OVER_TIME = 7200000L;
-    private static final String TOKEN_ERROR = "Token验证错误";
 
     public static String createToken(String val, String sign) {
-        return Jwts.builder()
-                .setHeaderParam("typ", "JWT")
-                .setHeaderParam("alg", "HS256")
-                .setAudience(val)
-                .setExpiration(new Date(System.currentTimeMillis() + OVER_TIME))
-                .signWith(SignatureAlgorithm.HS256, sign)
-                .claim("id", val)
-                .compact();
+        return JWT.create()
+                .withAudience(val)
+                .withExpiresAt(new Date(System.currentTimeMillis() + OVER_TIME))
+                .sign(Algorithm.HMAC256(sign));
     }
 
-    public static String parseToken(String token, String sign) {
-        String result = null;
+    public static boolean parseToken(String token, String sign) {
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(sign)).build();
         try {
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(sign).parseClaimsJws(token);
-            Claims body = claimsJws.getBody();
-            result = (String) body.get("id");
+            jwtVerifier.verify(token);
+        } catch (TokenExpiredException e) {
+            throw new ClientException(TokenErrorCode.TOKEN_EXPIRED_ERROR);
         } catch (Exception e) {
-            throw new ClientException(TOKEN_ERROR);
+            throw new ClientException(TokenErrorCode.TOKEN_ERROR);
         }
-        return result;
+        return true;
     }
 
     public static String getAudience(String token) {
-        String result = null;
+        String result;
         try {
-            result = (String) Jwts.parser().parseClaimsJws(token).getHeader().get("alg");
+            result = JWT.decode(token).getAudience().get(0);
         } catch (Exception e) {
-            throw new ClientException(TOKEN_ERROR);
+            throw new ClientException(TokenErrorCode.TOKEN_ERROR);
         }
         return result;
     }

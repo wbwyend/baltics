@@ -98,4 +98,8 @@ public class Results<T> implements Serializable {
     public static <T> Results<T> fail(String errorMsg){
         return new Results<T>().setCode(ERROR_CODE).setMessage(errorMsg);
     }
+
+    public static <T> Results<T> fail(int code, String errorMsg){
+        return new Results<T>().setCode(code).setMessage(errorMsg);
+    }
 }

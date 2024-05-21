@@ -1,7 +1,5 @@
 package cn.baltics.customer.enums;
 
-import javax.annotation.Resource;
-
 /**
  *@name CustomerEnum
  *

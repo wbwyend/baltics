@@ -1,7 +1,5 @@
 package cn.baltics.springboot.starter.cache.core;
 
-import org.springframework.lang.NonNull;
-
 import java.util.concurrent.TimeUnit;
 
 /**

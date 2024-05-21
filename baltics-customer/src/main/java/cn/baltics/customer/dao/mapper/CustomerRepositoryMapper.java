@@ -23,4 +23,7 @@ public interface CustomerRepositoryMapper {
 
     @Insert("insert into customer (id, username, password, mail) values (#{id}, #{username}, #{password}, #{mail})")
     void insert(CustomerDO customerDO);
+
+    @Select("select * from customer where id = #{id}")
+    CustomerDO getCustomerById(long id);
 }

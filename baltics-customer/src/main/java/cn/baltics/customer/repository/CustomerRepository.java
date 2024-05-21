@@ -19,7 +19,7 @@ public interface CustomerRepository {
     /**
      * 通过用户名获取用户聚合
      * @param username 用户名
-     * @return 用户聚合
+     * @return {@link Customer} 用户聚合
      */
     Customer getCustomerByUsername(String username);
 
@@ -28,4 +28,11 @@ public interface CustomerRepository {
      * @param customer 用户聚合
      */
     void saveRegisterCustomer(Customer customer);
+
+    /**
+     * 通过用户ID获取用户聚合
+     * @param id 用户ID
+     * @return {@link Customer} 用户聚合
+     */
+    Customer getCustomerById(long id);
 }

@@ -1,5 +1,7 @@
 package cn.baltics.springboot.starter.common.util;
 
+import cn.baltics.springboot.starter.convention.errorcode.BaseErrorCode;
+import cn.baltics.springboot.starter.convention.exception.ClientException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultJwt;
 import io.jsonwebtoken.impl.DefaultJwtBuilder;
@@ -17,20 +19,28 @@ import java.util.Map;
  */
 public final class TokenUtil {
 
-//    private static final long OVER_TIME = 7200000L;
+    private static final long OVER_TIME = 7200000L;
+    private static final String TOKEN_ERROR = "Token验证错误";
 
     public static String createToken(String val, String sign) {
-        JwtBuilder jwtBuilder = new DefaultJwtBuilder();
-        Map<String, Object> chaim = new HashMap<>();
-        chaim.put("id", val);
-        jwtBuilder.setClaims(chaim);
-        jwtBuilder.signWith(SignatureAlgorithm.HS256, sign);
-//        jwtBuilder.setExpiration();
-        Jwts.builder().setExpiration(new Date(System.currentTimeMillis() + 1000L));
-        return jwtBuilder.compact();
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setHeaderParam("alg", "HS256")
+                .setExpiration(new Date(System.currentTimeMillis() + OVER_TIME))
+                .signWith(SignatureAlgorithm.HS256, sign)
+                .claim("id", val)
+                .compact();
     }
 
     public static String parseToken(String token, String sign) {
-        return "";
+        String result = null;
+        try {
+            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(sign).parseClaimsJws(token);
+            Claims body = claimsJws.getBody();
+            result = (String) body.get("id");
+        } catch (Exception e) {
+            throw new ClientException(TOKEN_ERROR);
+        }
+        return result;
     }
 }

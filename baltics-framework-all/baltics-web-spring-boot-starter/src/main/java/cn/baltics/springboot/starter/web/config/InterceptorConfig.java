@@ -22,7 +22,8 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
         registry.addInterceptor(accessControlInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/customer/register/**")
-                .excludePathPatterns("/customer/login/**");
+                .excludePathPatterns("/customer/login/**")
+                .excludePathPatterns("/customer/logout/**");
         super.addInterceptors(registry);
     }
 }

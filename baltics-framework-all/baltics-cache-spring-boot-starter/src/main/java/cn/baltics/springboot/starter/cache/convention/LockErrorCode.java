@@ -10,7 +10,7 @@ import cn.baltics.springboot.starter.convention.errorcode.ErrorCode;
  */
 public enum LockErrorCode implements ErrorCode {
 
-    TOO_MANY_WAITING_THREAD_ERROR("", "阻塞的线程过多，执行拒绝请求策略");
+    TOO_MANY_WAITING_THREAD_ERROR("500", "阻塞的线程过多，执行拒绝请求策略");
 
     private final String code;
     private final String message;

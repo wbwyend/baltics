@@ -10,8 +10,8 @@ import cn.baltics.springboot.starter.convention.errorcode.ErrorCode;
  */
 public enum TokenErrorCode implements ErrorCode {
 
-    TOKEN_ERROR("", "Token解析错误"),
-    TOKEN_EXPIRED_ERROR("", "Token已过期");
+    TOKEN_ERROR("401", "Token解析错误"),
+    TOKEN_EXPIRED_ERROR("401", "Token已过期");
 
     private final String code;
 

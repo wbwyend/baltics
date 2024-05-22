@@ -32,6 +32,9 @@ public class AccessControlInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         Cookie[] cookies = request.getCookies();
+        if (cookies == null || cookies.length == 0) {
+            throw new ClientException(AccessControlErrorCode.TOKEN_IS_MISS);
+        }
         List<Cookie> cookieList = Arrays.stream(cookies)
                 .filter(cookie -> cookie.getName().equals("token"))
                 .collect(Collectors.toList());

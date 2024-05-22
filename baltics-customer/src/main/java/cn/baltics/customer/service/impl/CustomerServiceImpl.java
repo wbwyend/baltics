@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .mail(requestParam.getMail())
                 .verificationCode(verificationCode)
                 .build();
-        if (!customerRepository.registerCheckDuplication(customer)) {
+        if (customerRepository.registerCheckDuplication(customer)) {
             throw new ClientException(CustomerErrorEnum.CUSTOMER_REGISTER_DUPLICATION);
         }
         try {

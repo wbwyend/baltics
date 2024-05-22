@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = ClientException.class)
     public Results clientException(HttpServletResponse response, ClientException ex) {
+        ex.printStackTrace();
         if (StringUtil.isNotNullAndBlank(ex.errorCode)) response.setStatus(Integer.parseInt(ex.errorCode));
         return Results.fail(Integer.parseInt(ex.errorCode), ex.errorMessage);
     }
@@ -31,6 +32,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ServiceException.class)
     public Results abstractException(HttpServletRequest request, AbstractException ex) {
+        ex.printStackTrace();
         return Results.fail();
     }
 
@@ -39,6 +41,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Throwable.class)
     public Results defaultErrorHandler(HttpServletRequest request, Throwable throwable) {
+        throwable.printStackTrace();
         return Results.fail();
     }
 }

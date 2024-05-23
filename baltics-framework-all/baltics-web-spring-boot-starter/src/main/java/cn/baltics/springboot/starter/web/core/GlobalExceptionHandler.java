@@ -22,8 +22,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = ClientException.class)
     public Results clientException(HttpServletResponse response, ClientException ex) {
-        ex.printStackTrace();
-        if (StringUtil.isNotNullAndBlank(ex.errorCode)) response.setStatus(Integer.parseInt(ex.errorCode));
+        response.setStatus(Integer.parseInt(ex.errorCode));
         return Results.fail(Integer.parseInt(ex.errorCode), ex.errorMessage);
     }
 

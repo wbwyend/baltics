@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.baltics.shop.dao.mapper.ShopReviewReplyRepositoryMapper">
+<mapper namespace="cn.baltics.shop.dao.mapper.ShopReviewPictureRepositoryMapper">
 
-    <select id="getByReviewIds" resultType="cn.baltics.shop.dao.entity.ShopReviewReplyDO">
+    <select id="getByReviewIds" resultType="cn.baltics.shop.dao.entity.ShopReviewPictureDO">
         select *
-        from shop_review_reply
+        from shop_review_picture
         where id in
         <foreach collection="ids" item="id" open="(" close=")" separator=",">
             #{id}

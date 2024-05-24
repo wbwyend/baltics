@@ -1,8 +1,9 @@
 package cn.baltics.shop.service;
 
-import cn.baltics.shop.dto.req.ShopReviewReqDTO;
+import cn.baltics.shop.dto.req.ShopReviewAddReqDTO;
+import cn.baltics.shop.dto.req.ShopReviewGetReqDTO;
 import cn.baltics.shop.dto.resp.ShopCardRespDTO;
-import cn.baltics.shop.dto.resp.ShopReviewRespDTO;
+import cn.baltics.shop.dto.resp.ShopReviewGetRespDTO;
 
 /**
  *@func 
@@ -19,9 +20,21 @@ public interface ShopService {
 
     /**
      * 获取精选评论
-     * @param shopId 商店ID
-     * @param sort 排序方式
-     * @return {@link ShopReviewRespDTO}
+     * @param requestParam 请求参数
+     * @return {@link ShopReviewGetRespDTO}
      */
-    ShopReviewRespDTO getPartialReview(ShopReviewReqDTO requestParam);
+    ShopReviewGetRespDTO getPartialReview(ShopReviewGetReqDTO requestParam);
+
+    /**
+     * 分页获取全部评论
+     * @param requestParam 请求参数
+     * @return {@link ShopReviewGetRespDTO}
+     */
+    ShopReviewGetRespDTO getReview(ShopReviewGetReqDTO requestParam);
+
+    /**
+     * 新增评论
+     * @param requestParam 请求参数
+     */
+    void addReview(ShopReviewAddReqDTO requestParam);
 }

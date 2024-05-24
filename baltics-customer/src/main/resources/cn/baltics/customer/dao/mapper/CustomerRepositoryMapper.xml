@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.baltics.customer.dao.mapper.CustomerRepositoryMapper">
 
+    <select id="getCustomerByIds" resultType="cn.baltics.customer.dao.entity.CustomerDO">
+        select *
+        from customer
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

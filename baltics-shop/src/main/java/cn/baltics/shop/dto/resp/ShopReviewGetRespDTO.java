@@ -19,6 +19,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShopReviewRespDTO implements Serializable {
+public class ShopReviewGetRespDTO implements Serializable {
     List<ShopReview> shopReviewList;
 }

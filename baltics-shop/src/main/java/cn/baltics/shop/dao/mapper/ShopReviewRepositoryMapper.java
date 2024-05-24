@@ -16,4 +16,13 @@ import java.util.List;
 public interface ShopReviewRepositoryMapper {
     @Select("select * from shop_review where shop_id = #{shopId} limit 0, 10")
     List<ShopReviewDO> getShopReviewDefaultSort(int shopId);
+
+    @Select("select * from shop_review where shop_id = #{shopId} order by add_time desc limit 0, 10")
+    List<ShopReviewDO> getShopReviewLatestSort(int shopId);
+
+    @Select("select * from shop_review where shop_id = #{shopId} limit #{start}, #{size}")
+    List<ShopReviewDO> getDefaultPage(int shopId, int start, int size);
+
+    @Select("select * from shop_review where shop_id = #{shopId} limit #{start}, #{size}")
+    List<ShopReviewDO> getLatestPage(int shopId, int start, int size);
 }

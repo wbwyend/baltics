@@ -12,12 +12,14 @@ import java.io.Serializable;
  *@date 2024/05/23 
  */
 @Data
-public class ShopReviewReqDTO implements Serializable, AbstractStrategy {
+public class ShopReviewGetReqDTO implements Serializable, AbstractStrategy {
     private int shopId;
     /**
      * 排序策略
      */
     private String sort;
+    private int page;
+    private int size;
 
     @Override
     public String buildMask() {

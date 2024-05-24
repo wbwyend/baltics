@@ -1,6 +1,9 @@
 package cn.baltics.shop.dao.mapper;
 
+import cn.baltics.shop.dao.entity.ShopReviewReplyDO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  *@func 
@@ -10,4 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ShopReviewReplyRepositoryMapper {
+    List<ShopReviewReplyDO> getByReviewIds(List<Long> ids);
 }

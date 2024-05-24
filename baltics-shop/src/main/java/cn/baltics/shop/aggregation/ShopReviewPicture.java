@@ -21,5 +21,4 @@ public class ShopReviewPicture implements Serializable {
     private String id;
     private String url;
     private String reviewId;
-    private int status;
 }

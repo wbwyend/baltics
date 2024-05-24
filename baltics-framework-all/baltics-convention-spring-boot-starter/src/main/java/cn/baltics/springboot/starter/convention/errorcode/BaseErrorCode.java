@@ -8,6 +8,7 @@ package cn.baltics.springboot.starter.convention.errorcode;
 public enum BaseErrorCode implements ErrorCode {
     // ========== 一级宏观错误码 客户端错误 ==========
     CLIENT_ERROR("200", "用户端错误"),
+    RESULT_IS_NULL("200", "查询结果为空"),
 
     // ========== 二级宏观错误码 用户注册错误 ==========
     USER_REGISTER_ERROR("200", "用户注册错误"),

@@ -1,16 +1,16 @@
 package cn.baltics.shop.controller;
 
-import cn.baltics.shop.dto.req.ShopReviewReqDTO;
+import cn.baltics.shop.dto.req.ShopReviewAddReqDTO;
+import cn.baltics.shop.dto.req.ShopReviewGetReqDTO;
 import cn.baltics.shop.dto.resp.ShopCardRespDTO;
-import cn.baltics.shop.dto.resp.ShopReviewRespDTO;
+import cn.baltics.shop.dto.resp.ShopReviewGetRespDTO;
 import cn.baltics.shop.service.ShopService;
 import cn.baltics.springboot.starter.convention.result.Results;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.websocket.server.PathParam;
 
 /**
  *@func 商店服务接口
@@ -30,8 +30,20 @@ public class ShopController {
     }
 
     @GetMapping("/shop/get/review/partial")
-    public Results<ShopReviewRespDTO> getPartialReview(@RequestBody ShopReviewReqDTO requestParam) {
-        ShopReviewRespDTO result = shopService.getPartialReview(requestParam);
+    public Results<ShopReviewGetRespDTO> getPartialReview(@RequestBody ShopReviewGetReqDTO requestParam) {
+        ShopReviewGetRespDTO result = shopService.getPartialReview(requestParam);
         return Results.success(result);
+    }
+
+    @GetMapping("/shop/get/review")
+    public Results<ShopReviewGetRespDTO> getReview(@RequestBody ShopReviewGetReqDTO requestParam) {
+        ShopReviewGetRespDTO result = shopService.getReview(requestParam);
+        return Results.success(result);
+    }
+
+    @PostMapping("/shop/add/review")
+    public Results<Void> addReview(@RequestBody ShopReviewAddReqDTO requestParam) {
+        shopService.addReview(requestParam);
+        return Results.success();
     }
 }

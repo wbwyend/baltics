@@ -29,4 +29,6 @@ public interface CustomerRepositoryMapper {
 
     @Select("#{sql}")
     List<CustomerDO> doSelect(String sql);
+
+    List<CustomerDO> getCustomerByIds(List<Long> ids);
 }

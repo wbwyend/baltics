@@ -16,7 +16,6 @@ import java.util.List;
  */
 @Data
 public class ShopReviewAddReqDTO implements Serializable {
-    private long id;
     private long customerId;
     private long shopId;
     private String reviewBody;

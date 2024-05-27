@@ -2,6 +2,8 @@ package cn.baltics.shop.controller;
 
 import cn.baltics.shop.dto.req.ShopReviewAddReqDTO;
 import cn.baltics.shop.dto.req.ShopReviewGetReqDTO;
+import cn.baltics.shop.dto.req.ShopReviewLikeReqDTO;
+import cn.baltics.shop.dto.req.ShopReviewReplyAddReqDTO;
 import cn.baltics.shop.dto.resp.ShopCardRespDTO;
 import cn.baltics.shop.dto.resp.ShopReviewGetRespDTO;
 import cn.baltics.shop.service.ShopService;
@@ -31,7 +33,7 @@ public class ShopController {
 
     @GetMapping("/shop/get/review/partial")
     public Results<ShopReviewGetRespDTO> getPartialReview(@RequestBody ShopReviewGetReqDTO requestParam) {
-        ShopReviewGetRespDTO result = shopService.getPartialReview(requestParam);
+        ShopReviewGetRespDTO result = shopService.getReview(requestParam);
         return Results.success(result);
     }
 
@@ -44,6 +46,18 @@ public class ShopController {
     @PostMapping("/shop/add/review")
     public Results<Void> addReview(@RequestBody ShopReviewAddReqDTO requestParam) {
         shopService.addReview(requestParam);
+        return Results.success();
+    }
+
+    @PostMapping("/shop/add/reply")
+    public Results<Void> addReview(@RequestBody ShopReviewReplyAddReqDTO requestParam) {
+        shopService.addReply(requestParam);
+        return Results.success();
+    }
+
+    @PostMapping("/shop/add/like")
+    public Results<Void> addLike(@RequestBody ShopReviewLikeReqDTO requestParam) {
+        shopService.addLike(requestParam);
         return Results.success();
     }
 }

@@ -60,4 +60,11 @@ public interface Cache {
      */
     Boolean hasKey(String key);
 
+    /**
+     * 如果键不存在放入set集合缓存并返回true，否则返回false
+     * @param key 键
+     * @param value 值
+     */
+    Boolean setPutIfAbsent(String key, Object value);
+
 }

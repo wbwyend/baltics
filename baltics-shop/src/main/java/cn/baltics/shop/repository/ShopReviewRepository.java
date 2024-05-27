@@ -16,14 +16,14 @@ public interface ShopReviewRepository {
      * @param shopId 商店ID
      * @return {@link ShopReview}
      */
-    List<ShopReview> getShopReviewDefaultSort(int shopId);
+    List<ShopReview> getDefaultPart(long shopId);
 
     /**
      * 最新排序获取评价
      * @param shopId 商店ID
      * @return {@link ShopReview}
      */
-    List<ShopReview> getShopReviewLatestSort(int shopId);
+    List<ShopReview> getLatestPart(long shopId);
 
     /**
      * 分页查询默认排序评价
@@ -32,7 +32,7 @@ public interface ShopReviewRepository {
      * @param size 页大小
      * @return {@link ShopReview}
      */
-    List<ShopReview> getDefaultPage(int shopId, int page, int size);
+    List<ShopReview> getDefaultPage(long shopId, int page, int size);
 
     /**
      * 分页查询最新排序评价
@@ -41,5 +41,23 @@ public interface ShopReviewRepository {
      * @param size 页大小
      * @return {@link ShopReview}
      */
-    List<ShopReview> getLatestPage(int shopId, int page, int size);
+    List<ShopReview> getLatestPage(long shopId, int page, int size);
+
+    /**
+     * 添加新评价
+     * @param review 评价
+     */
+    void add(ShopReview review);
+
+    /**
+     * 回复数加一
+     * @param reviewId 评价ID
+     */
+    void updateReplyCount(long reviewId);
+
+    /**
+     * 点赞数家一
+     * @param reviewId 评价ID
+     */
+    void updateLikeCount(long reviewId);
 }

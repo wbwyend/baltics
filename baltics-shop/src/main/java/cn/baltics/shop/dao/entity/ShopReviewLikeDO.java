@@ -3,18 +3,15 @@ package cn.baltics.shop.dao.entity;
 import lombok.Builder;
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  *@func 
  *
  *@author wbwyend
- *@date 2024/05/24 
+ *@date 2024/05/27 
  */
 @Data
 @Builder
-public class ShopReviewPictureDO implements Serializable {
-    private String id;
-    private String url;
+public class ShopReviewLikeDO {
     private long reviewId;
+    private long customerId;
 }

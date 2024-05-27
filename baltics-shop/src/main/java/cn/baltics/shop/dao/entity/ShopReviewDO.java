@@ -1,13 +1,9 @@
 package cn.baltics.shop.dao.entity;
 
-import cn.baltics.customer.aggregation.Customer;
-import cn.baltics.shop.aggregation.ShopReviewPicture;
-import cn.baltics.shop.aggregation.ShopReviewReply;
 import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *@func 

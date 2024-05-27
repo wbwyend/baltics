@@ -89,4 +89,9 @@ public class CustomerServiceImpl implements CustomerService {
         return abstractStrategySelector.chooseAndExecuteResp(requestParam.buildMask(), requestParam);
     }
 
+    @Override
+    public Customer getById(long customerId) {
+        return customerRepository.getCustomerById(customerId);
+    }
+
 }

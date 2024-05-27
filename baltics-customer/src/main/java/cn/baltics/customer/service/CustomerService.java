@@ -1,5 +1,6 @@
 package cn.baltics.customer.service;
 
+import cn.baltics.customer.aggregation.Customer;
 import cn.baltics.customer.dto.req.CustomerLoginReqDTO;
 import cn.baltics.customer.dto.req.CustomerRegisterCommitReqDTO;
 import cn.baltics.customer.dto.req.CustomerRegisterVerifyReqDTO;
@@ -30,4 +31,11 @@ public interface CustomerService {
      * @param requestParam 请求参数
      */
     CustomerLoginRespDTO login(CustomerLoginReqDTO requestParam);
+
+    /**
+     * 通过ID查询用户
+     * @param customerId 用户ID
+     * @return {@link Customer}
+     */
+    Customer getById(long customerId);
 }

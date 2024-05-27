@@ -110,5 +110,15 @@ public class CacheService implements Cache  {
         return stringRedisTemplate.hasKey(key);
     }
 
+    @Override
+    public Boolean setPutIfAbsent(String key, Object value) {
+        String actual = value instanceof String ? (String) value : JSON.toJSONString(value);
+        if (!Boolean.TRUE.equals(stringRedisTemplate.opsForSet().isMember(key, actual))) {
+            stringRedisTemplate.opsForSet().add(key, actual);
+            return true;
+        }
+        return false;
+    }
+
 
 }

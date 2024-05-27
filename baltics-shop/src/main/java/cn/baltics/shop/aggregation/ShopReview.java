@@ -32,4 +32,5 @@ public class ShopReview implements Serializable {
     private long modTime;
     private Customer customer;
     private List<ShopReviewReply> reviewReplyList;
+    private boolean isLike;
 }

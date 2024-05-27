@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.baltics.shop.dao.mapper.ShopReviewPictureRepositoryMapper">
+    <insert id="addBatch">
+        <foreach collection="pictures" item="pic" open="" close="" separator=";">
+            insert into shop_review_picture
+            (id, url, review_id)
+            values
+            (#{pic.id}, #{pic.url}, #{pic.reviewId})
+        </foreach>
+    </insert>
 
     <select id="getByReviewIds" resultType="cn.baltics.shop.dao.entity.ShopReviewPictureDO">
         select *

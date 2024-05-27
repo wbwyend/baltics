@@ -32,63 +32,45 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ShopReviewRepositoryImpl implements ShopReviewRepository {
     private ShopReviewRepositoryMapper shopReviewRepositoryMapper;
-    private ShopReviewReplyRepositoryMapper shopReviewReplyRepositoryMapper;
-    private ShopReviewPictureRepositoryMapper shopReviewPictureRepositoryMapper;
-    private CustomerRepositoryMapper customerRepositoryMapper;
 
-    /**
-     * 为评价添加回复和图片
-     * @param reviewDOList 评价表
-     * @return {@link ShopReview}
-     */
-    private List<ShopReview> addReplyAndPicToReview(List<ShopReviewDO> reviewDOList) {
-        if (CollectionUtils.isEmpty(reviewDOList)) {
-            return new ArrayList<>();
-        }
-        List<Long> ids = reviewDOList.stream().map(ShopReviewDO::getShopId).collect(Collectors.toList());
-        List<ShopReviewReplyDO> replyDOList = shopReviewReplyRepositoryMapper.getByReviewIds(ids);
-        List<ShopReviewPictureDO> pictureDOList = shopReviewPictureRepositoryMapper.getByReviewIds(ids);
-        List<CustomerDO> customerDOList = customerRepositoryMapper.getCustomerByIds(reviewDOList.stream()
-                .map(ShopReviewDO::getCustomerId)
-                .collect(Collectors.toList()));
-        List<ShopReview> result = BeanUtil.copyToList(reviewDOList, ShopReview.class);
-        result.forEach(review -> {
-            review.setReviewReplyList(BeanUtil.copyToList(replyDOList.stream()
-                            .filter(replyDO -> replyDO.getReviewId() == review.getId())
-                            .collect(Collectors.toList()), ShopReviewReply.class));
-            review.setReviewPicList(BeanUtil.copyToList(pictureDOList.stream()
-                            .filter(pictureDO -> pictureDO.getReviewId() == review.getId())
-                            .collect(Collectors.toList()), ShopReviewPicture.class));
-            review.setCustomer(BeanUtil.copyProperties(customerDOList.stream()
-                            .filter(customerDO -> customerDO.getId() == review.getCustomerId())
-                            .collect(Collectors.toList())
-                            .get(0), Customer.class));
-        });
-        return result;
-    }
     @Override
-    public List<ShopReview> getShopReviewDefaultSort(int shopId) {
+    public List<ShopReview> getDefaultPart(long shopId) {
         List<ShopReviewDO> result = shopReviewRepositoryMapper.getShopReviewDefaultSort(shopId);
-        return addReplyAndPicToReview(result);
+        return BeanUtil.copyToList(result, ShopReview.class);
     }
 
     @Override
-    public List<ShopReview> getShopReviewLatestSort(int shopId) {
-        List<ShopReviewDO> result = shopReviewRepositoryMapper.getShopReviewLatestSort(shopId);
-        return addReplyAndPicToReview(result);
+    public List<ShopReview> getLatestPart(long shopId) {
+        List<ShopReviewDO> result = shopReviewRepositoryMapper.getShopReviewDefaultSort(shopId);
+        return BeanUtil.copyToList(result, ShopReview.class);
     }
 
     @Override
-    public List<ShopReview> getDefaultPage(int shopId, int page, int size) {
+    public List<ShopReview> getDefaultPage(long shopId, int page, int size) {
         int start = (page - 1) * size;
         List<ShopReviewDO> result = shopReviewRepositoryMapper.getDefaultPage(shopId, start, size);
-        return addReplyAndPicToReview(result);
+        return BeanUtil.copyToList(result, ShopReview.class);
     }
 
     @Override
-    public List<ShopReview> getLatestPage(int shopId, int page, int size) {
+    public List<ShopReview> getLatestPage(long shopId, int page, int size) {
         int start = (page - 1) * size;
         List<ShopReviewDO> result = shopReviewRepositoryMapper.getLatestPage(shopId, start, size);
-        return addReplyAndPicToReview(result);
+        return BeanUtil.copyToList(result, ShopReview.class);
+    }
+
+    @Override
+    public void add(ShopReview review) {
+        shopReviewRepositoryMapper.add(BeanUtil.copyProperties(review, ShopReviewDO.class));
+    }
+
+    @Override
+    public void updateReplyCount(long reviewId) {
+        shopReviewRepositoryMapper.plusReplyCount(reviewId);
+    }
+
+    @Override
+    public void updateLikeCount(long reviewId) {
+        shopReviewRepositoryMapper.plusLikeCount(reviewId);
     }
 }

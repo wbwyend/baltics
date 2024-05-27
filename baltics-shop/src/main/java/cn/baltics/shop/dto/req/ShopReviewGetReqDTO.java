@@ -13,7 +13,8 @@ import java.io.Serializable;
  */
 @Data
 public class ShopReviewGetReqDTO implements Serializable, AbstractStrategy {
-    private int shopId;
+    private long customerId;
+    private long shopId;
     /**
      * 排序策略
      */

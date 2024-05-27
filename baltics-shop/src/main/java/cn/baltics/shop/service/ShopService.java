@@ -2,6 +2,8 @@ package cn.baltics.shop.service;
 
 import cn.baltics.shop.dto.req.ShopReviewAddReqDTO;
 import cn.baltics.shop.dto.req.ShopReviewGetReqDTO;
+import cn.baltics.shop.dto.req.ShopReviewLikeReqDTO;
+import cn.baltics.shop.dto.req.ShopReviewReplyAddReqDTO;
 import cn.baltics.shop.dto.resp.ShopCardRespDTO;
 import cn.baltics.shop.dto.resp.ShopReviewGetRespDTO;
 
@@ -19,14 +21,7 @@ public interface ShopService {
     ShopCardRespDTO getShopCard(Integer id);
 
     /**
-     * 获取精选评论
-     * @param requestParam 请求参数
-     * @return {@link ShopReviewGetRespDTO}
-     */
-    ShopReviewGetRespDTO getPartialReview(ShopReviewGetReqDTO requestParam);
-
-    /**
-     * 分页获取全部评论
+     * 获取评论
      * @param requestParam 请求参数
      * @return {@link ShopReviewGetRespDTO}
      */
@@ -37,4 +32,16 @@ public interface ShopService {
      * @param requestParam 请求参数
      */
     void addReview(ShopReviewAddReqDTO requestParam);
+
+    /**
+     * 新增回复
+     * @param requestParam 请求参数
+     */
+    void addReply(ShopReviewReplyAddReqDTO requestParam);
+
+    /**
+     * 点赞
+     * @param requestParam 请求参数
+     */
+    void addLike(ShopReviewLikeReqDTO requestParam);
 }

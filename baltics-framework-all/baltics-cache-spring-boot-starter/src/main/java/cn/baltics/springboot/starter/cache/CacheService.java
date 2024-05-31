@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *@name CacheService 缓存服务
@@ -118,6 +119,10 @@ public class CacheService implements Cache  {
             return true;
         }
         return false;
+    }
+
+    public long hashIncrementAndGet(String key, String hashKey) {
+        return stringRedisTemplate.opsForHash().increment(key, hashKey, 1);
     }
 
 

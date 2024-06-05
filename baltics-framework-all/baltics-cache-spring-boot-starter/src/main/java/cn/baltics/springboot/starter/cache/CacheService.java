@@ -12,7 +12,9 @@ import com.alibaba.fastjson2.JSON;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -69,7 +71,7 @@ public class CacheService implements Cache  {
     public <T> T safeGet(String key, Class<T> clazz, long timeout, TimeUnit unit, CacheLoader<T> loader, CacheIfAbsentExecutor<T> executor) {
         T result = get(key, clazz);
         if (!isNullOrBlank(result)) return result;
-        DistributedLock lock = DistributedLockFactory.getLock(SAFE_GET_DISTRIBUTED_LOCK_KEY_PREFIX + key);
+        DistributedLock lock = DistributedLockFactory.getLock(SAFE_GET_DISTRIBUTED_LOCK_KEY_PREFIX + key, stringRedisTemplate);
         try {
             boolean isLocked = lock.lock();
             while (!isLocked) {
@@ -123,6 +125,12 @@ public class CacheService implements Cache  {
 
     public long hashIncrementAndGet(String key, String hashKey) {
         return stringRedisTemplate.opsForHash().increment(key, hashKey, 1);
+    }
+
+    public <T> T executeScript(DefaultRedisScript<T> script, Object... args) {
+        return stringRedisTemplate.execute(script,
+                Collections.emptyList(),
+                args);
     }
 
 

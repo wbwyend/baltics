@@ -1,9 +1,11 @@
 package cn.baltics.springboot.starter.cache.lock;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.stereotype.Component;
 
 /**
  *@name DistributedLockUtil
@@ -12,8 +14,6 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
  *@date 2024/05/18 
  */
 public class DistributedLockFactory {
-    @Autowired
-    private static StringRedisTemplate stringRedisTemplate;
 
     private static final DefaultRedisScript<Long> UNLOCK_SCRIPT;
 
@@ -23,7 +23,7 @@ public class DistributedLockFactory {
         UNLOCK_SCRIPT.setResultType(Long.class);
     }
 
-    public static DistributedLock getLock(String key) {
+    public static DistributedLock getLock(String key, StringRedisTemplate stringRedisTemplate) {
         return new DistributedLock(key, stringRedisTemplate, UNLOCK_SCRIPT);
     }
 }

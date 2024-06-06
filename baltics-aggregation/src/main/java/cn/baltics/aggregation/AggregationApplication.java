@@ -11,7 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *@date 2024/05/18 
  */
 @SpringBootApplication(scanBasePackages = {"cn.baltics"})
-@MapperScan(value = {"cn.baltics.customer.dao.mapper"})
+@MapperScan(value = {"cn.baltics.customer.dao.mapper",
+        "cn.baltics.shop.dao.mapper",
+        "cn.baltics.order.dao.mapper"})
 public class AggregationApplication {
     public static void main(String[] args) {
         SpringApplication.run(AggregationApplication.class, args);

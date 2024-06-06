@@ -2,6 +2,7 @@ package cn.baltics.order.dto.req;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
  *@date 2024/05/31 
  */
 @Data
-public class OrderSubmitReqDTO {
+public class OrderSubmitReqDTO implements Serializable {
     private long customerId;
     private long shopId;
     private long couponId;
